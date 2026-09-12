@@ -92,4 +92,34 @@ function Cart({ cart }) {
     <div>
       <h1>Cart ({cart.length})</h1>
       <section><h3>1. Your Items</h3></section>
-      <section><h3>2. List</h3>{cart.map((
+      <section><h3>2. List</h3>
+        {cart.map((item, i) => (
+          <p key={i}>{item.title} - ${item.price}</p>
+        ))}
+      </section>
+      <section><h3>3. Summary</h3></section>
+      <section><h3>4. Checkout Info</h3></section>
+      <section><h3>5. Help</h3></section>
+    </div>
+  )
+}
+
+function App() {
+  const [cart, setCart] = useState([])
+  const addToCart = (p) => setCart([...cart, p])
+
+  return (
+    <BrowserRouter>
+      <Navbar count={cart.length} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/product/:id" element={<Details addToCart={addToCart} />} />
+        <Route path="/cart" element={<Cart cart={cart} />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
+  )
+}
+
+export default App
